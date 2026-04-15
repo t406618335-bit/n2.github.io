@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이휘서 포트폴리오 | Semiconductor Expert</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* CSS 스타일은 제공해주신 원본의 고급스러운 다크 모드를 그대로 유지합니다 */
+:root {
+  --bg: #0d0d0f; --bg2: #141416; --bg3: #1c1c1f; --surface: #222226;
+  --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.14);
+  --text: #f0ede8; --muted: #888885; --accent: #c8a97e; --accent2: #e8c99e;
+  --accent-dim: rgba(200,169,126,0.12); --danger: #e05c5c; --success: #5cb85c;
+  --serif: 'Noto Serif KR', serif; --sans: 'Noto Sans KR', sans-serif;
+}
+/* ... (이하 기존 CSS와 동일) ... */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; line-height: 1.7; min-height: 100vh; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; height: 64px; background: rgba(13,13,15,0.88); backdrop-filter: blur(16px); border-bottom: 0.5px solid var(--border); }
+.nav-logo { font-family: var(--serif); font-size: 15px; color: var(--accent); letter-spacing: 0.08em; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+#adminBtn { font-size: 12px; padding: 6px 14px; border-radius: 20px; border: 0.5px solid var(--border2); background: transparent; color: var(--muted); cursor: pointer; transition: all 0.2s; }
+#hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 8rem 2rem 4rem; text-align: center; position: relative; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(200,169,126,0.07) 0%, transparent 70%); pointer-events: none; }
+.hero-inner { max-width: 800px; position: relative; }
+.hero-name { font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
+.hero-tagline { font-size: 18px; color: var(--accent); margin-bottom: 1.5rem; letter-spacing: 0.1em; }
+.hero-bio { font-size: 16px; color: var(--muted); line-height: 1.9; max-width: 650px; margin: 0 auto 2.5rem; }
+section { padding: 6rem 2rem; max-width: 1000px; margin: 0 auto; }
+.section-label { font-size: 11px; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; }
+.section-title { font-family: var(--serif); font-size: 2.2rem; font-weight: 600; color: var(--text); margin-bottom: 3rem; }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.about-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 16px; padding: 1.75rem 2rem; }
+.about-card h3 { font-size: 14px; color: var(--accent); margin-bottom: 1rem; }
+.timeline { position: relative; padding-left: 2rem; }
+.timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 1px; background: var(--border2); }
+.tl-item { position: relative; margin-bottom: 2.5rem; }
+.tl-dot { position: absolute; left: -2rem; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+.tl-date { font-size: 12px; color: var(--accent); margin-bottom: 4px; }
+.tl-title { font-size: 16px; font-weight: 500; color: var(--text); }
+.project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+.project-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 16px; padding: 1.75rem; }
+.skill-pill { font-size: 11px; padding: 3px 10px; border: 0.5px solid var(--border2); border-radius: 20px; color: var(--muted); margin-right: 4px; margin-bottom: 4px; display: inline-block; }
+.admin-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; background: var(--bg3); border-top: 0.5px solid var(--accent); padding: 0.75rem 2rem; align-items: center; gap: 1rem; }
+.admin-bar.show { display: flex; }
+.save-btn { padding: 6px 18px; background: var(--accent); color: var(--bg); border: none; border-radius: 6px; cursor: pointer; }
+.fade-in { opacity: 0; transform: translateY(24px); transition: all 0.6s ease; }
+.fade-in.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo" id="siteName">HWEE SEO LEE</div>
+  <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#activities">Experience</a></li>
+    <li><a href="#projects">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button id="adminBtn" onclick="toggleAdmin()">Admin</button>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <h1 class="hero-name" id="heroName">이휘서</h1>
+    <p class="hero-tagline" id="heroTagline">Ph.D. in Electrical Engineering | Semiconductor Architecture Expert</p>
+    <p class="hero-bio" id="heroBio">
+      Stanford University에서 차세대 반도체 소자 및 공정 최적화 연구로 박사 학위를 취득하였습니다. 
+      글로벌 나노 소자 연구소에서의 선행 연구 경험을 바탕으로, 삼성전자의 초격차 기술을 이끌 준비가 된 엔지니어입니다.
+    </p>
+  </div>
+</section>
+
+<section id="about" class="fade-in">
+  <div class="section-label">Executive Profile</div>
+  <h2 class="section-title">자기소개 및 핵심 역량</h2>
+  <div class="about-grid">
+    <div class="about-card">
+      <h3>학술적 배경</h3>
+      <p>해외 유수 대학원에서의 박사 과정을 통해 반도체 물리, 양자 역학 및 미세 공정 시스템에 대한 깊은 이해를 보유하고 있습니다.</p>
+    </div>
+    <div class="about-card">
+      <h3>전문 기술</h3>
+      <p>EUV 노광 공정, FinFET 구조 설계, 고수율 수율 분석(YMS) 및 머신러닝 기반 공정 최적화 알고리즘 구현에 능숙합니다.</p>
+    </div>
+  </div>
+</section>
+
+<section id="activities" class="fade-in">
+  <div class="section-label">Academic & Career</div>
+  <h2 class="section-title">경력 및 학력 사항</h2>
+  <div class="timeline" id="timeline">
+    </div>
+</section>
+
+<section id="projects" class="fade-in">
+  <div class="section-label">Professional Credentials</div>
+  <h2 class="section-title">전문 자격증 (20건)</h2>
+  <div class="project-grid" id="projectGrid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+    </div>
+</section>
+
+<section id="contact" class="fade-in">
+  <div class="section-label">Contact</div>
+  <h2 class="section-title">연락처</h2>
+  <div class="about-card" id="contactCard">
+    </div>
+</section>
+
+<footer>
+  <p>© 2026 이휘서 포트폴리오. Future Samsung Electronics Leader.</p>
+</footer>
+
+<script>
+const defaultData = {
+  siteName: 'Hwee Seo Lee',
+  heroName: '이휘서',
+  heroTagline: '차세대 반도체 공정 및 설계 전문가 (Ph.D.)',
+  heroBio: '미국 Stanford University 반도체 공학 박사 출신으로, 나노 스케일 소자 설계와 공정 제어 분야에서 10년 이상의 연구 경험을 보유하고 있습니다. 삼성전자의 반도체 신화를 이어갈 기술적 혁신을 지향합니다.',
+  activities: [
+    { date: '2021 - 2025', title: 'Stanford University (Ph.D.)', desc: '전기전자공학 박사 졸업. 논문: 2nm 이하 공정을 위한 High-k 소재 및 FinFET 게이트 구조 최적화' },
+    { date: '2019 - 2021', title: 'Intel Corporation (Research Intern)', desc: '미국 오리건 본사 연구소에서 차세대 로직 공정 수율 향상을 위한 선행 연구 수행.' },
+    { date: '2017 - 2019', title: 'Georgia Institute of Technology (M.S.)', desc: '석사 과정 이수. 반도체 소자 물리 및 VLSI 설계 전공.' }
+  ],
+  projects: [
+    { title: '반도체설계기사', tag: '국가자격', desc: '반도체 집적회로 설계 역량 보유' },
+    { title: '전자응용기술사', tag: '기술사', desc: '전자 분야 최고 등급 전문성' },
+    { title: 'ASML EUV 인증', tag: 'Global', desc: 'EUV 노광 장비 운용 전문 자격' },
+    { title: '반도체공정관리전문가', tag: '전문자격', desc: '수율 개선 및 공정 제어 기술' },
+    { title: 'PMP (Project Management)', tag: 'Global', desc: '글로벌 프로젝트 관리 전문가' },
+    { title: 'Six Sigma Black Belt', tag: '품질혁신', desc: '데이터 기반 품질 개선 최고 등급' },
+    { title: 'AWS Cloud Architecture', tag: 'IT', desc: '스마트 팩토리 시스템 구축 역량' },
+    { title: '데이터분석준전문가(ADsP)', tag: '데이터', desc: '빅데이터 활용 수율 분석' },
+    { title: '나노소자분석사', tag: '특화', desc: 'TEM/SEM 장비 분석 자격' },
+    { title: '정보처리기사', tag: 'IT', desc: '시스템 알고리즘 이해력' },
+    { title: '전기공사기사', tag: '인프라', desc: 'Fab 설비 전력 계통 이해' },
+    { title: '화학공학기사', tag: '공정', desc: '에칭 및 증착 화학 공정 전문성' },
+    { title: '회로설계전문가(EDA)', tag: '설계', desc: 'Cadence/Synopsys 활용 능력' },
+    { title: 'ISO 9001 심사원', tag: '품질', desc: '국제 품질 경영 표준 전문가' },
+    { title: 'VLSI Master Certification', tag: 'Global', desc: '초대규모 집적회로 설계 마스터' },
+    { title: 'AI Developer Cert (TensorFlow)', tag: 'AI', desc: '딥러닝 기반 불량 검출 시스템 구축' },
+    { title: '기계설계기사', tag: '장비', desc: '반도체 메인프레임 설계 이해' },
+    { title: '산업안전기사', tag: '안전', desc: '클린룸 내 안전 및 유해물질 관리' },
+    { title: '창의적 문제해결(TRIZ) Lv3', tag: '혁신', desc: '공정 난제 해결 방법론 이수' },
+    { title: '외국어(OPIc AL)', tag: 'Global', desc: '글로벌 비즈니스 및 연구 소통 능력' }
+  ],
+  contact: { email: 'hweeseo.lee@stanford.edu', phone: '+82 010-XXXX-XXXX', sns: 'linkedin.com/in/hweeseo-lee', school: 'Stanford University (PhD)' }
+};
+
+function render() {
+  document.getElementById('timeline').innerHTML = defaultData.activities.map(act => `
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">${act.date}</div>
+      <div class="tl-title">${act.title}</div>
+      <div class="tl-desc">${act.desc}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('projectGrid').innerHTML = defaultData.projects.map(prj => `
+    <div class="project-card">
+      <span class="skill-pill" style="color:var(--accent);border-color:var(--accent)">${prj.tag}</span>
+      <div style="font-weight:600; font-size:15px; margin:5px 0;">${prj.title}</div>
+      <div style="font-size:12px; color:var(--muted);">${prj.desc}</div>
+    </div>
+  `).join('');
+
+  const c = defaultData.contact;
+  document.getElementById('contactCard').innerHTML = `
+    <p>Email: ${c.email}</p>
+    <p>Phone: ${c.phone}</p>
+    <p>LinkedIn: <a href="#" style="color:var(--accent)">${c.sns}</a></p>
+    <p>Education: ${c.school}</p>
+  `;
+}
+
+window.onload = () => {
+  render();
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+};
+</script>
+</body>
+</html>
